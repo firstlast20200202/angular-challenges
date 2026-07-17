@@ -1,3 +1,5 @@
+to run the project: $ npm start
+
 <p align='center'>
   <img src='./logo/angular-challenge.png' height="150px"/>
 </p>
