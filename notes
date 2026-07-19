@@ -1,2 +1,8 @@
+setup in VScode:
 to run the project: $ npm start
 
+open this project and get into the project folder, initialize spec-kit:
+uvx --from git+https://github.com/firstlast20200202/spec-kit.git specify init --here
+
+install extension:
+specify extension add --dev ./spec-kit-testing-extension
