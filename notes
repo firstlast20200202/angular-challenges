@@ -7,3 +7,10 @@ uvx --from git+https://github.com/firstlast20200202/spec-kit.git specify init --
 
 step 3, install extension:
 specify extension add --dev ./spec-kit-testing-extension
+
+$ git add .
+$ git commit -m "blabla"
+it outputs 'prettier --write [FAILED]' which means that dependencies are not installed yet, to solve the problem:
+$ npm install
+verify:
+$ npx prettier --version
