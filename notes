@@ -51,3 +51,22 @@ if outputs are like speckit.testing-helper.inspect.agent.md -> ../../.specify/ex
 the -> indicates that the file is a symbolic link pointing to another file, rather than an actual file itself. That's why Prettier refuses to format it.
 
 solution:
+in package.json:
+"lint-staged": {
+  "*.{ts,json,md}": [
+    "prettier --write"
+  ]
+}
+edit to:    
+"lint-staged": {
+  "spec-kit-testing-extension/**/*.{ts,json,md}": [
+    "prettier --write"
+  ]
+}
+in this way, it only formats files under spec-kit-testing-extension/, it doesnt edit files under .github/agents/
+
+
+
+开发完extension也是要单独安装的 $ specify extension add --dev ./spec-kit-testing-extension
+spec-kit-testing-extension = 你的 extension 项目的文件夹名字（repository / directory name）
+testing-helper = 这个 extension 在 Spec-Kit 里的 extension ID
