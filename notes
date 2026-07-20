@@ -65,6 +65,30 @@ edit to:
 }
 in this way, it only formats files under spec-kit-testing-extension/, it doesnt edit files under .github/agents/
 
+commit again, gets:
+husky - commit-msg hook exited with code 1 (error)
+reason:
+.git/hooks/
+pre-commit
+    |
+    | Husky executes the pre-commit hook
+    | Usually runs lint-staged
+    | lint-staged runs tools such as Prettier/ESLint
+    |
+    v
+commit-msg
+    |
+    | Husky executes the commit-msg hook
+    | The commit-msg hook calls commitlint
+    | commitlint checks the commit message format
+    |
+    v
+Git commit is completed
+husky + commitlint requires conventional commits, which format is type(scope): message
+
+solution:
+$ git commit -m "feat: add testing helper extension"
+commit succeeds.
 
 
 开发完extension也是要单独安装的 $ specify extension add --dev ./spec-kit-testing-extension
