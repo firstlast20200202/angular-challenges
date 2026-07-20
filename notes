@@ -90,6 +90,11 @@ solution:
 $ git commit -m "feat: add testing helper extension"
 commit succeeds.
 
+test my extension in copilot:
+/speckit.testing-helper.inspect
+didnt work..
+
+
 
 开发完extension也是要单独安装的 $ specify extension add --dev ./spec-kit-testing-extension
 spec-kit-testing-extension = 你的 extension 项目的文件夹名字（repository / directory name）
