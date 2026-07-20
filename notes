@@ -20,6 +20,7 @@ commit again, it still outputs:
 [error] Explicitly specified pattern "/Users/lilywu/github/angular-challenges/.github/agents/speckit.testing-helper.inspect.agent.md" is a symbolic link.'
 which means prettier was asked to format a symbolic link (symlink), but it doesn't support formatting symlinks. As a result, lint-staged failed and 
 the Git commit was aborted. 
+
 A symbolic link (or symlink) is similar to a shortcut in Windows. It is a special type of file that points to another file or directory instead of 
 storing the actual content itself.
 say,
@@ -41,7 +42,7 @@ because package.json contains the following lint-staged configuration:
 }
 when you run 'git commit', the pre-commit hook triggers lint-staged, which passes all staged .ts, .json, and .md files to: $ prettier --write
 one of those staged files is: .github/agents/speckit.testing-helper.inspect.agent.md
-which file is a symbolic link (symlink) rather than a regular file.
+which is a symbolic link (symlink) rather than a regular file.
 since prettier does not support formatting symlinks, it reports an error, causing lint-staged to fail and the Git commit to be aborted.
 
 how to verify it's a symlink: 
@@ -49,3 +50,4 @@ $ ls -l .github/agents
 if outputs are like speckit.testing-helper.inspect.agent.md -> ../../.specify/extensions/testing-helper/agents/inspect.agent.md
 the -> indicates that the file is a symbolic link pointing to another file, rather than an actual file itself. That's why Prettier refuses to format it.
 
+solution:
