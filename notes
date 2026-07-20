@@ -15,4 +15,37 @@ $ npm install
 verify:
 $ npx prettier --version
 
-lint-staged???
+commit again, it still outputs: 
+'✖ prettier --write:
+[error] Explicitly specified pattern "/Users/lilywu/github/angular-challenges/.github/agents/speckit.testing-helper.inspect.agent.md" is a symbolic link.'
+which means prettier was asked to format a symbolic link (symlink), but it doesn't support formatting symlinks. As a result, lint-staged failed and 
+the Git commit was aborted. 
+A symbolic link (or symlink) is similar to a shortcut in Windows. It is a special type of file that points to another file or directory instead of 
+storing the actual content itself.
+say,
+.github/agents/
+└── speckit.testing-helper.inspect.agent.md
+        │
+        └────────► ../../.specify/extensions/testing-helper/agents/inspect.agent.md
+The actual file is located elsewhere: ../../.specify/extensions/testing-helper/agents/inspect.agent.md
+The file under .github/agents/ is not a real copy of the file. It is just a symbolic link that points to the actual file.
+This means that when you open or edit the file through the symlink, you are actually accessing the original file it points to. 
+Any changes are made to the original file, not to a separate copy.
+
+Why does Prettier report an error?
+because package.json contains the following lint-staged configuration:
+"lint-staged": {
+  "*.{ts,json,md}": [
+    "prettier --write"
+  ]
+}
+when you run 'git commit', the pre-commit hook triggers lint-staged, which passes all staged .ts, .json, and .md files to: $ prettier --write
+one of those staged files is: .github/agents/speckit.testing-helper.inspect.agent.md
+which file is a symbolic link (symlink) rather than a regular file.
+since prettier does not support formatting symlinks, it reports an error, causing lint-staged to fail and the Git commit to be aborted.
+
+how to verify it's a symlink: 
+$ ls -l .github/agents
+if outputs are like speckit.testing-helper.inspect.agent.md -> ../../.specify/extensions/testing-helper/agents/inspect.agent.md
+the -> indicates that the file is a symbolic link pointing to another file, rather than an actual file itself. That's why Prettier refuses to format it.
+
